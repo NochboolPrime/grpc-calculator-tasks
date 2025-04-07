@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package task;
+
+// Задаём опцию для генерации Go-кода.
+// Обратите внимание: название пакета после точки соответствует используемому вами модулю.
+option go_package = "grpc-calculator-tasks/proto;proto";
+
+// Определение сообщения Task.
+message Task {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+}
+
+// Запрос для добавления задачи.
+message AddTaskRequest {
+  string title = 1;
+  string description = 2;
+}
+
+// Ответ добавления задачи.
+message AddTaskResponse {
+  Task task = 1;
+}
+
+// Пустой запрос для получения списка задач.
+message GetTasksRequest {}
+
+// Ответ со списком задач.
+message GetTasksResponse {
+  repeated Task tasks = 1;
+}
+
+// Определение сервиса с двумя RPC-методами.
+service TaskService {
+  rpc AddTask(AddTaskRequest) returns (AddTaskResponse);
+  rpc GetTasks(GetTasksRequest) returns (GetTasksResponse);
+}
